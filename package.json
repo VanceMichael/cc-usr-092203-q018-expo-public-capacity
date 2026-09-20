@@ -1,0 +1,9 @@
+{
+  "name": "092203-expo-public-capacity",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
