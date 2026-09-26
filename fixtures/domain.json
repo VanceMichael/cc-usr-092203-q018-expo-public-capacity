@@ -1,21 +1,69 @@
 {
   "domain": "expo-public-capacity",
-  "version": 1,
+  "version": 2,
   "sample_id": "record-018",
   "actors": [
     "业务负责人",
     "一线执行人员",
-    "审查人员"
+    "审查人员",
+    "指挥席",
+    "区域工作人员",
+    "展商",
+    "观众",
+    "团队访客",
+    "未成年人及陪同人"
   ],
   "facts": [
-    "公众开放日集中展示未来空间、AI商品和东盟国家展品",
+    "公众开放日仅两天，集中展示未来空间、AI商品和东盟国家展品",
+    "未来空间展区的火箭模型、可上手的AI商品和东帝汶展馆在不同时段形成客流峰值",
+    "仅按总入场人数限流，仍可能让某条通道或某个互动点瞬间失控",
     "互动展项允许观众现场体验",
-    "不同展区的内容性质和客流吸引力差异明显"
+    "不同展区的内容性质和客流吸引力差异明显",
+    "预约、现场排队、无障碍通行、团队访客、未成年人陪同和临时封控共同占用局部容量",
+    "设备故障、展商暂停演示、突发疏散和路线改道会立即改变可达路径",
+    "展项互动属于科普体验，不属于零售订单"
   ],
   "constraints": [
     "分区承载计算",
     "预约与现场排队",
     "动态路线重算",
-    "应急疏散确认"
+    "应急疏散确认",
+    "扫码重试不得重复入场",
+    "临时封控区内的人员必须获得明确引导",
+    "观众端提供真实等待时间和下一可选路线",
+    "工作人员仅操作负责区域",
+    "指挥席可回看计数来源、调整命令和疏散确认",
+    "科普展示不计入零售订单统计"
+  ],
+  "zones": [
+    { "id": "zone-future-space", "name": "未来空间展区", "capacity": 800 },
+    { "id": "zone-ai-goods", "name": "AI商品展区", "capacity": 600 },
+    { "id": "zone-timor-leste", "name": "东帝汶展馆", "capacity": 300 }
+  ],
+  "entrances": [
+    { "id": "gate-east", "name": "东入口", "zones": ["zone-future-space", "zone-ai-goods"] },
+    { "id": "gate-west", "name": "西入口", "zones": ["zone-timor-leste"] }
+  ],
+  "corridors": [
+    { "id": "corridor-central", "from": "zone-future-space", "to": "zone-ai-goods", "capacity": 200 },
+    { "id": "corridor-asean", "from": "zone-ai-goods", "to": "zone-timor-leste", "capacity": 120 }
+  ],
+  "exhibits": [
+    { "id": "exhibit-rocket-model", "zone": "zone-future-space", "name": "火箭模型", "interactive": false, "category": "科普展示" },
+    { "id": "exhibit-ai-hands-on", "zone": "zone-ai-goods", "name": "可上手AI商品", "interactive": true, "category": "科普展示" },
+    { "id": "exhibit-timor-culture", "zone": "zone-timor-leste", "name": "东帝汶文化展示", "interactive": true, "category": "科普展示" },
+    { "id": "exhibit-timor-coffee", "zone": "zone-timor-leste", "name": "东帝汶咖啡", "interactive": false, "category": "零售" }
+  ],
+  "demo_slots": [
+    { "exhibit": "exhibit-rocket-model", "slot": "10:00-10:30", "capacity": 60 },
+    { "exhibit": "exhibit-rocket-model", "slot": "14:00-14:30", "capacity": 60 },
+    { "exhibit": "exhibit-ai-hands-on", "slot": "11:00-11:20", "capacity": 40 },
+    { "exhibit": "exhibit-ai-hands-on", "slot": "15:00-15:20", "capacity": 40 },
+    { "exhibit": "exhibit-timor-culture", "slot": "13:00-13:40", "capacity": 50 }
+  ],
+  "staff": [
+    { "role": "区域工作人员", "scope": ["zone-future-space"], "capabilities": ["扫码入场", "排队管理"] },
+    { "role": "区域工作人员", "scope": ["zone-ai-goods", "zone-timor-leste"], "capabilities": ["排队管理", "设备故障上报"] },
+    { "role": "指挥席", "scope": ["*"], "capabilities": ["拥挤预警回看", "路线调整", "疏散确认"] }
   ]
 }
